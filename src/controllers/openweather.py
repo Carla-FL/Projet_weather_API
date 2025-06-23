@@ -18,8 +18,15 @@ def get_coord_from_city(city_name: str="", country_code: str="", state_code: str
     
     res = httpx.get(URL, timeout=10)
     if res.status_code == 200:
-        d = OpenWeatherGeocoding()
-    return 
+        d = res.json()[0]
+        return OpenWeatherGeocoding(
+            name=d.get('name'),
+            lat=d.get('lat'),
+            lon=d.get('lon'),
+            country=d.get('country'),
+            state=d.get('state')
+        )
+    return None
 
 def get_weather_from_city(c):
     # step 1 : call geocoding
