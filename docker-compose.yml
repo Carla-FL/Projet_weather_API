@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-weather-api
+    environment:
+      POSTGRES_DB: weather_db
+      POSTGRES_USER: weather_user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+  
+  redis:
+    image: redis:7-alpine
+    container_name: redis-weather-api
+    ports:
+      - "6379:6379"
