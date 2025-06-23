@@ -1,9 +1,9 @@
 # Projet_weather_API
 # Projet : API de Données Météorologiques
-Vue d'ensemble du projet
+## Vue d'ensemble du projet
 Ce projet consiste à développer une API REST complète qui agrège des données météorologiques provenant de plusieurs sources externes. L'objectif est d'appliquer les bonnes pratiques de développement, notamment le Test-Driven Development (TDD), les tests de contrat, les tests de charge, et la mise en place d'un système de monitoring.
 
-Objectifs pédagogiques
+## Objectifs pédagogiques
 Maîtriser le développement d'API REST avec une approche TDD
 Comprendre l'agrégation de données de sources multiples
 Implémenter des tests de différents niveaux (unitaires, intégration, contrat, charge)
