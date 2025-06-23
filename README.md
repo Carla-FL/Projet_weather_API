@@ -4,21 +4,21 @@
 Ce projet consiste à développer une API REST complète qui agrège des données météorologiques provenant de plusieurs sources externes. L'objectif est d'appliquer les bonnes pratiques de développement, notamment le Test-Driven Development (TDD), les tests de contrat, les tests de charge, et la mise en place d'un système de monitoring.
 
 ## Objectifs pédagogiques
-Maîtriser le développement d'API REST avec une approche TDD
-Comprendre l'agrégation de données de sources multiples
-Implémenter des tests de différents niveaux (unitaires, intégration, contrat, charge)
-Mettre en place un système de monitoring et d'alertes
-Gérer la qualité du code et les métriques de performance
-Architecture du projet
-Stack technologique recommandée
-Backend : Node.js avec Express ou Python avec FastAPI
-Base de données : PostgreSQL pour les données persistantes, Redis pour le cache
-Tests : Jest/Mocha (Node.js) ou pytest (Python)
-Tests de charge : Locust ou Artillery
-Monitoring : Prometheus + Grafana
-Documentation : Swagger/OpenAPI
-Sources de données météo suggérées
-APIs recommandées pour les étudiants :
+* Maîtriser le développement d'API REST avec une approche TDD
+* Comprendre l'agrégation de données de sources multiples
+* Implémenter des tests de différents niveaux (unitaires, intégration, contrat, charge)
+* Mettre en place un système de monitoring et d'alertes
+* Gérer la qualité du code et les métriques de performance
+## Architecture du projet
+### Stack technologique recommandée
+* *Backend* : Node.js avec Express ou Python avec FastAPI
+* Base de données : PostgreSQL pour les données persistantes, Redis pour le cache
+* Tests : Jest/Mocha (Node.js) ou pytest (Python)
+* Tests de charge : Locust ou Artillery
+* Monitoring : Prometheus + Grafana
+* Documentation : Swagger/OpenAPI
+### Sources de données météo suggérées
+#### APIs recommandées pour les étudiants :
 
 OpenWeatherMap - https://openweathermap.org/api
 
