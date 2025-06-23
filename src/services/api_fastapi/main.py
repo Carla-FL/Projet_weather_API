@@ -18,5 +18,3 @@ def load_meteo_from_city(city_name: str=None):
     if res is None:
         raise HTTPException(status_code=404, detail="Weather data not found")
     return res
-
-
