@@ -41,7 +41,7 @@ def load_meteo_mutisource(city_name: str=""):
     try:
         return merge.get_multisource_meteo(city_name)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Erreur dans get_multisource_meteo : {str(e)}")
+        raise #HTTPException(status_code=400, detail=f"Erreur dans get_multisource_meteo : {str(e)}")
 
 if __name__ == '__main__':
     uvicorn.run("src.services.api_fastapi.main:app", host="127.0.0.1", port=8025, reload=True)
