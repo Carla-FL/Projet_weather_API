@@ -1,5 +1,5 @@
 import openmeteo_requests
-import numpy as np
+import numpy as np, datetime
 from openmeteo_sdk.Variable import Variable
 from openmeteo_sdk.Aggregation import Aggregation
 from src.controllers.openweather import get_coord_from_city
@@ -66,7 +66,7 @@ def get_weather_from_openmeteo(c) -> dict:
                                 ville=str(ville)
                         ),
                         informations_temporelles=InformationsTemporelles(
-                                current_time=str(response.Current().Time())
+                                current_time=str(datetime.datetime.fromtimestamp(response.Current().Time()))
                         ),
                         temperature=Temperature(
                                 actuelle=str(current_temperature_2m.Value()),
