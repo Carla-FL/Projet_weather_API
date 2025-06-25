@@ -5,3 +5,5 @@ httpx
 pipreqs
 pydantic
 numpy
+redis
+pytest
