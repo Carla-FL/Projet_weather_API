@@ -1,16 +1,16 @@
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres_weather
-    environment:
-      POSTGRES_DB: weather_db
-      POSTGRES_USER: weather_user
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-    restart: always
-    volumes:
-      - ./src/services/storage/postgres:/var/lib/postgresql/data
+  # postgres:
+  #   image: postgres:latest # 15
+  #   container_name: postgres_weather
+  #   environment:
+  #     POSTGRES_DB: weather_db
+  #     POSTGRES_USER: weather_user
+  #     POSTGRES_PASSWORD: password
+  #   ports:
+  #     - "5432:5432"
+  #   restart: always
+  #   volumes:
+  #     - ./src/services/storage/postgres:/var/lib/postgresql/data
   
   redis:
     image: redis:7-alpine
@@ -21,12 +21,12 @@ services:
     volumes:
       - ./src/services/storage/redis:/data
 
-  api:
-    build: . # builder le dossier actuel pour le service api
-    image: weather-api:latest  # nom de l'image de l'api
-    container_name: weather-api
-    ports:
-      - "8009:8009"
-    depends_on:
-      - redis
-      - postgres
+  # api:
+  #   build: . # builder le dossier actuel pour le service api
+  #   image: weather-api:latest  # nom de l'image de l'api
+  #   container_name: weather-api
+  #   ports:
+  #     - "8009:8009"
+  #   depends_on:
+  #     - redis
+  #     - postgres
