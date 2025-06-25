@@ -33,7 +33,8 @@ def get_weather_from_openmeteo(c) -> dict:
         }
         res = om.weather_api("https://api.open-meteo.com/v1/forecast", params=params)
         if res is None:
-                return None
+                print({"error": "No data found for the specified city.", "source": "openmeteo"})
+                return SingleSourceModelRep(source="openmeteo")
         else:
                 response = res[0]
                 print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
@@ -51,47 +52,40 @@ def get_weather_from_openmeteo(c) -> dict:
                 current_pressure = next(filter(lambda x: x.Variable() == Variable.pressure_msl , current_variables))
                 current_visibility = next(filter(lambda x: x.Variable() == Variable.visibility, current_variables))
 
-                
-
                 daily = response.Daily()
                 daily_variables = list(map(lambda i: daily.Variables(i), range(0, daily.VariablesLength())))
                 temperature_2m_max = next(filter(lambda x: x.Variable() == Variable.temperature and x.Altitude() == 2 and x.Aggregation() == Aggregation.maximum, daily_variables))
                 temperature_2m_min = next(filter(lambda x: x.Variable() == Variable.temperature and x.Altitude() == 2 and x.Aggregation() == Aggregation.minimum, daily_variables))
 
-
-
-                """
-                Créations de variables 
-                """
-                Vent(
-                        vitesse=str(current_wind_speed_10m.Value()),
-                        direction=str(current_wind_direction_10m.Value()),
-                        unité="km/h"
+                return SingleSourceModelRep(
+                        source="openmeteo",
+                        localisation=Localisation(
+                                longitude=str(response.Longitude()),
+                                latitude=str(response.Latitude()),
+                                pays=str(pays),
+                                ville=str(ville)
+                        ),
+                        informations_temporelles=InformationsTemporelles(
+                                current_time=str(response.Current().Time())
+                        ),
+                        temperature=Temperature(
+                                actuelle=str(current_temperature_2m.Value()),
+                                ressentie=str(current_apparent_temperature.Value()),
+                                min=str(temperature_2m_min.ValuesAsNumpy()[0]),
+                                max=str(temperature_2m_max.ValuesAsNumpy()[0]),
+                                unité="°C"
+                        ),
+                        conditions_meteorologiques=ConditionsMeteorologiques(
+                                etat="",
+                                description="",
+                                humidité=str(current_relative_humidity_2m.Value()),
+                                pression=str(current_pressure.Value()),
+                                visibilité=str(current_visibility.Value())
+                        ),
+                        vent=Vent(
+                                vitesse=str(current_wind_speed_10m.Value()),
+                                direction=str(current_wind_direction_10m.Value()),
+                                unité="km/h"
+                        )
                 )
 
-                Temperature(
-                        actuelle=str(current_temperature_2m.Value()),
-                        ressentie=str(current_apparent_temperature.Value()),
-                        min=str(temperature_2m_min.ValuesAsNumpy()[0]),
-                        max=str(temperature_2m_max.ValuesAsNumpy()[0]),
-                        unité="°C"
-                )
-
-                ConditionsMeteorologiques(
-                        etat="",
-                        description="",
-                        humidité=str(current_relative_humidity_2m.Value()),
-                        pression=str(current_pressure.Value()),
-                        visibilité=str(current_visibility.Value())
-                )
-                Localisation(
-                        longitude=str(response.Longitude()),
-                        latitude=str(response.Latitude()),
-                        pays=str(pays),
-                        ville=str(ville)
-                )
-                InformationsTemporelles(
-                        current_time=str(response.Current().Time())
-                )
-
-                return "ok"
