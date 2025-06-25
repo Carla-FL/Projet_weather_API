@@ -1,25 +1,31 @@
-import httpx, dotenv, os
-from src. controllers.openweather import get_coord_from_city
 import openmeteo_requests
 from openmeteo_sdk.Variable import Variable
+from src. controllers.openweather import get_coord_from_city
 
-dotenv.load_dotenv()
-TOKEN = os.getenv("api_key_open_weather", "")
+# dotenv.load_dotenv()
+# TOKEN = os.getenv("api_key_open_weather", "")
 om = openmeteo_requests.Client()
 
-def get_weather_from_openmeteo(c):
+def get_weather_from_openmeteo(c) -> dict:
+        """
+        Faire un appel api vers la source openmeteo.
+        """
+
+        # etape 1 : récup les longitude et latitude en partant du nom de la ville
         fields = get_coord_from_city(c)
         lon = fields.lon
         lat = fields.lat
+        ville = fields.name
+        pays = fields.state # ou fields.contry
 
+        # etape 2 : appel api en passant par le client
         params = {
-                "latitude": lat,
-                "longitude": lon,
-                "temperature_unit": "celsius",
-                "forecast_days": 1,
-                "current": ["apparent_temperature", "temperature_2m"],
-                "daily" :["temperature_2m_max","temperature_2m_min"]
-                }
+        "latitude": lat,
+        "longitude": lon,
+        "temperature_unit": "celsius",
+        "current": ["apparent_temperature", "temperature_2m"],
+        "daily" :["temperature_2m_max","temperature_2m_min"]
+        }
         res = om.weather_api("https://api.open-meteo.com/v1/forecast", params=params)
         if res is None:
                 return None
