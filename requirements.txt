@@ -1,4 +1,6 @@
 dotenv
 fastapi
-openmeteo-requests
+uvicorn
 httpx
+pipreqs
+pydantic
