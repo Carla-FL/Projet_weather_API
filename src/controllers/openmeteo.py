@@ -11,10 +11,12 @@ def get_weather_from_openmeteo(c):
         fields = get_coord_from_city(c)
         lon = fields.lon
         lat = fields.lat
+
         params = {
                 "latitude": lat,
                 "longitude": lon,
                 "temperature_unit": "celsius",
+                "forecast_days": 1,
                 "current": ["apparent_temperature", "temperature_2m"],
                 "daily" :["temperature_2m_max","temperature_2m_min"]
                 }
