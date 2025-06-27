@@ -23,7 +23,6 @@ def get_weather_from_weatherapi(cityname) -> SingleSourceModelRep:
 
     if res.status_code == 200:
         res = res.json()
-        print(res.keys())
         return SingleSourceModelRep(
             source = "weatherapi",
             localisation=Localisation(
@@ -44,7 +43,7 @@ def get_weather_from_weatherapi(cityname) -> SingleSourceModelRep:
             ),
             conditions_meteorologiques=ConditionsMeteorologiques(
                 etat="",
-                description="",
+                description=str(res["current"]["condition"]["text"]),
                 humidité=str(res["current"]["humidity"]),
                 pression=str(res["current"]["pressure_mb"]) + " mb",
                 visibilité=str(res["current"]["vis_km"]) + " km"

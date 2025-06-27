@@ -1,3 +1,35 @@
+import subprocess
+
+# "Mocking" with pytest means replacing parts of your code (like functions, classes, or external APIs) with mock objects during tests, so you can control their behavior and test your code in isolation.
+# This is usually done with pytest's 'monkeypatch' fixture or the 'unittest.mock' library.
+
+# However, Locust is a load testing tool that actually sends HTTP requests to a running API server.
+# You cannot "mock" the API endpoints and still perform a real Locust load test in this file alone,
+# because Locust needs a real HTTP server to hit.
+
+# If you want to test Locust scripts without a real API, you would need to run a mock server (like with Flask or http.server)
+# that responds to the endpoints Locust expects. This is outside the scope of pytest mocking.
+
+# In summary:
+# - pytest mocking is for unit/integration tests, not for load tests with Locust.
+# - Locust requires a real (or at least running mock) HTTP server to test against.
+
+def test_run_locust_load_test():
+    print("Running Locust load test...")
+    cmd = [
+        "locust",
+        "-f", "tests/load/locustfile.py",
+        "--users", "3",
+        "--spawn-rate", "5",
+        "--run-time", "1m",
+        "--headless",
+        "--host", "http://localhost:8025"
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    print(result.stdout)
+    if result.returncode != 0:
+        print("Locust test failed:", result.stderr)
+
 """
 Phase 4 : Tests de charge avec Locust
 Qu'est-ce que Locust ?

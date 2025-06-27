@@ -4,6 +4,7 @@ from src.models.input_models import (
     OpenWeatherGeocodingModel, 
     OpenWeatherAPIResponseModel
 )
+from src.models.response_models import SingleSourceModelRep
 
 dotenv.load_dotenv()
 TOKEN = os.getenv("api_key_open_weather", "")
@@ -32,7 +33,7 @@ def get_coord_from_city(city_name: str="", country_code: str="", state_code: str
     else:
         return None
 
-def get_weather_from_city(c):
+def get_weather_from_openweather(c):
 
     # step 1 : call geocoding
     fields = get_coord_from_city(c)
@@ -46,18 +47,20 @@ def get_weather_from_city(c):
     # step 2 : call openweatherapi with lon, lat
     URL = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid={TOKEN}"
     res = httpx.get(URL)
-    if res.status_code == 200:
-        res = res.json()
-        return OpenWeatherAPIResponseModel(
-            temp = res.get('temp'),
-            feels_like = res.get('feels_like'),
-            pressure = res.get('pressure'),
-            humidity = res.get('humidity'),
-            dew_point = res.get('dew_point'),
-            uvi = res.get('uvi'),
-            clouds = res.get('clouds'),
-            visibility = res.get('visibility'),
-            wind_speed = res.get('wind_speed'),
-            wind_deg = res.get('wind_deg')
-            )
-    return None
+    return SingleSourceModelRep(source="openweather")
+    
+    # if res.status_code == 200:
+    #     res = res.json()
+    #     return OpenWeatherAPIResponseModel(
+    #         temp = res.get('temp'),
+    #         feels_like = res.get('feels_like'),
+    #         pressure = res.get('pressure'),
+    #         humidity = res.get('humidity'),
+    #         dew_point = res.get('dew_point'),
+    #         uvi = res.get('uvi'),
+    #         clouds = res.get('clouds'),
+    #         visibility = res.get('visibility'),
+    #         wind_speed = res.get('wind_speed'),
+    #         wind_deg = res.get('wind_deg')
+    #         )
+    # return None
