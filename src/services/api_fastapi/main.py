@@ -1,4 +1,8 @@
-import dotenv, os, fastapi, sys, uvicorn
+import os
+import sys
+import dotenv
+import uvicorn
+import fastapi, sys
 from fastapi.exceptions import HTTPException
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
@@ -17,7 +21,7 @@ def health_check():
 def load_meteo_from_city_with_openweather(city_name: str=None):
     if not city_name:
         return {"error": "city name required !"} # ajouter status code erreur
-    res = openweather.get_weather_from_city(city_name)
+    res = openweather.get_weather_from_openweather(city_name)
     if res is None:
         raise HTTPException(status_code=404, detail="Weather data not found")
     return res

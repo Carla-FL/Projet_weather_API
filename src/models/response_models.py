@@ -71,3 +71,19 @@ class SingleSourceModelRep(BaseModel):
 
 class MultiSourceModelRep(BaseModel):
     data: List[SingleSourceModelRep]
+
+class OpenMeteoResponseModel(SingleSourceModelRep):
+    source: str = "openmeteo"
+    localisation: Localisation
+    informations_temporelles: InformationsTemporelles
+    temperature: Temperature
+    conditions_meteorologiques: ConditionsMeteorologiques
+    vent: Vent
+
+class WeatherAPIResponseModel(SingleSourceModelRep):
+    source: str = "weatherapi"
+    localisation: Localisation
+    informations_temporelles: InformationsTemporelles
+    temperature: Temperature
+    conditions_meteorologiques: ConditionsMeteorologiques
+    vent: Vent

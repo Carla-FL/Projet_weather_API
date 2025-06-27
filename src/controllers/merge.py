@@ -3,6 +3,7 @@ import redis
 import dotenv
 import datetime
 from .openmeteo import get_weather_from_openmeteo
+from .openweather import get_weather_from_openweather
 from .weatherapi import get_weather_from_weatherapi
 from src.models.response_models import (
     MultiSourceModelRep, 
@@ -32,10 +33,7 @@ def make_redis_key(city_name):
 def call_multisource_meteo(city_name) -> MultiSourceModelRep:
 
     res_openmeteo: SingleSourceModelRep = get_weather_from_openmeteo(city_name)
-
-    res_openweather: SingleSourceModelRep = SingleSourceModelRep() # openweather.get_meteo()
-    res_openweather.source = "openweather"
-
+    res_openweather: SingleSourceModelRep = get_weather_from_openweather(city_name)
     res_weatherapi: SingleSourceModelRep = get_weather_from_weatherapi(city_name)
 
     return MultiSourceModelRep(
