@@ -1,4 +1,5 @@
 import httpx, os, dotenv
+from functools import lru_cache
 from src.models.input_models import (
     OpenWeatherGeocodingModel, 
     OpenWeatherAPIResponseModel
@@ -7,6 +8,7 @@ from src.models.input_models import (
 dotenv.load_dotenv()
 TOKEN = os.getenv("api_key_open_weather", "")
 
+@lru_cache(2048)
 def get_coord_from_city(city_name: str="", country_code: str="", state_code: str="", limit=1) -> OpenWeatherGeocodingModel:
     """
     appeler api geocoding - source: https://openweathermap.org/api/geocoding-api
@@ -19,7 +21,6 @@ def get_coord_from_city(city_name: str="", country_code: str="", state_code: str
     
     res = httpx.get(URL, ) # timeout=30)
     if res.status_code == 200:
-        print("ok openweather")
         d = res.json()[0]
         return OpenWeatherGeocodingModel(
             name=d.get('name'),
@@ -45,13 +46,8 @@ def get_weather_from_city(c):
     # step 2 : call openweatherapi with lon, lat
     URL = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid={TOKEN}"
     res = httpx.get(URL)
-    
-    print(res.status_code)
-    print(URL)
-
     if res.status_code == 200:
         res = res.json()
-        print(res)
         return OpenWeatherAPIResponseModel(
             temp = res.get('temp'),
             feels_like = res.get('feels_like'),
