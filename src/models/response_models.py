@@ -34,40 +34,40 @@ single_source_model_rep = {
     }
 }
 class Localisation(BaseModel):
-    longitude: Optional[str] = None
-    latitude: Optional[str] = None
-    pays: Optional[str] = None
-    ville: Optional[str] = None
+    longitude: Optional[str] = ""
+    latitude: Optional[str] = ""
+    pays: Optional[str] = ""
+    ville: Optional[str] = ""
 
 class InformationsTemporelles(BaseModel):
-    current_time: Optional[str] = None
+    current_time: Optional[str] = ""
 
 class Temperature(BaseModel):
-    actuelle: Optional[str] = None
-    ressentie: Optional[str] = None
-    min: Optional[str] = None
-    max: Optional[str] = None
-    unité: Optional[str] = None
+    actuelle: Optional[str] = ""
+    ressentie: Optional[str] = ""
+    min: Optional[str] = ""
+    max: Optional[str] = ""
+    unité: Optional[str] = ""
 
 class ConditionsMeteorologiques(BaseModel):
-    etat: Optional[str] = None
-    description: Optional[str] = None
-    humidité: Optional[str] = None
-    pression: Optional[str] = None
-    visibilité: Optional[str] = None
+    etat: Optional[str] = ""
+    description: Optional[str] = ""
+    humidité: Optional[str] = ""
+    pression: Optional[str] = ""
+    visibilité: Optional[str] = ""
 
 class Vent(BaseModel):
-    vitesse: Optional[str] = None
-    direction: Optional[str] = None
-    unité: Optional[str] = None
+    vitesse: Optional[str] = ""
+    direction: Optional[str] = ""
+    unité: Optional[str] = ""
 
 class SingleSourceModelRep(BaseModel):
-    source: Optional[str] = None
-    localisation: Optional[Localisation] = None
-    informations_temporelles: Optional[InformationsTemporelles] = None
-    temperature: Optional[Temperature] = None
-    conditions_meteorologiques: Optional[ConditionsMeteorologiques] = None
-    vent: Optional[Vent] = None
+    source: Optional[str] = ""
+    localisation: Optional[Localisation] = ""
+    informations_temporelles: Optional[InformationsTemporelles] = ""
+    temperature: Optional[Temperature] = ""
+    conditions_meteorologiques: Optional[ConditionsMeteorologiques] = ""
+    vent: Optional[Vent] = ""
 
 class MultiSourceModelRep(BaseModel):
     data: List[SingleSourceModelRep]
