@@ -2,15 +2,26 @@
 
 ## 🇫🇷 Lancer le projet
 
-### 1. Lancer avec Docker Compose
+### 1. Lancer les services nécessaires avec Docker Compose
+
+La commande suivante lancera le serveur redis. 
 
 ```bash
 docker-compose up --build -d
 ```
 
-L'API sera accessible sur `http://localhost:8025` *(si vous ne modifiez pas les ports d'exposition)*
-
 ### 2. Lancer l'API en local (hors Docker)
+
+Ajouter les variables suivantes dans un fichier .env à la racine du projet :
+```bash
+api_key_open_weather = "your api key"
+api_key_weather_api = "your api key"
+redis_host = "localhost"
+redis_port = "6379"
+redis_db= "0"
+fastapi_port = "8025"
+fastapi_host = "localhost"
+```
 
 Assurez-vous d'avoir installé les dépendances :
 
@@ -23,6 +34,7 @@ Puis lancez l'API depuis la racine du projet:
 ```bash
 python src/services/api_fastapi/main.py
 ```
+L'API sera accessible sur `http://localhost:8025` *(si vous ne modifiez pas les ports d'exposition)*
 
 ### 3. Lancer les tests
 
@@ -47,13 +59,15 @@ Le test de charge nécéssite que l'API soit démarré (au moins en localhost). 
 - `--host` : URL de l'API cible à tester (ex: http://localhost:8025).
 
 ```bash
-locust -f tests/load/locustfile.py --users 20 --spawn-rate 5 --run-time 10m --headless --host=http://localhost:8025
+locust -f src/tests/load/locustfile.py --users 20 --spawn-rate 5 --run-time 10m --headless --host=http://localhost:8025
 ```
 - Locust génère un tableau de rapport dans le CLI durant la session de test et à la fin un tableau récapitulatif.
 
 - Pour avoir l'interface web, ne pas mettre le flag `--headless`. L'interface Locust sera disponible à l'adresse `http://127.0.0.1:8089` durant toute la session du test ; ceci permettra de suivre les temps de réponse et les taux de succès/echecs via des graphes en temps réeel.
 
-
+Exemple : Test de charge de 20 utilisateurs en 1 minute avec `spawn-rate=5`.
+![locust1](src/tests/load/locust_homepage.png)
+![locust1](src/tests/load/locust_charts.png)
 ---
 
 ## 🇬🇧 Launch the project

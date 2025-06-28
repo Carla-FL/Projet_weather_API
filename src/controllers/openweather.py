@@ -1,4 +1,5 @@
 import httpx, os, dotenv
+from fastapi import HTTPException
 from functools import lru_cache
 from src.models.input_models import (
     OpenWeatherGeocodingModel, 
@@ -24,7 +25,7 @@ def get_coord_from_city(city_name: str="", country_code: str="", state_code: str
     if country_code: location += f",{country_code}"
     URL = f"http://api.openweathermap.org/geo/1.0/direct?q={location}&limit={limit}&appid={TOKEN}"
     res = httpx.get(URL, ) # timeout=30)
-    if res.status_code == 200:
+    if res.status_code == 200 and res.json():
         d = res.json()[0]
         return OpenWeatherGeocodingModel(
             name=d.get('name'),

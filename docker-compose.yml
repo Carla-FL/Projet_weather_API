@@ -8,11 +8,3 @@ services:
     volumes:
       - ./src/services/storage/redis:/data
 
-  fastapi_weather_api:
-    build: . # builder le dossier actuel pour le service api
-    image: weather-api:latest  # nom de l'image de l'api
-    container_name: weather-api
-    ports:
-      - "8025:8025"
-    depends_on:
-      - redis
