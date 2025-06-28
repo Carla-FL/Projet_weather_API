@@ -386,6 +386,7 @@ Faites le votre ici
 Mock des réponses des APIs tierces
 Tests de robustesse en cas de changement de format
 Validation des transformations de données
+
 Phase 4 : Tests de charge avec Locust
 Qu'est-ce que Locust ?
 Locust est un outil de test de charge open-source écrit en Python qui permet de simuler des milliers d'utilisateurs simultanés sur votre application. Contrairement à d'autres outils, Locust utilise du code Python pour définir le comportement des utilisateurs, ce qui le rend très flexible et expressif.
