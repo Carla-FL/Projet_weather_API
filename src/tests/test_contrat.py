@@ -36,6 +36,7 @@ import datetime
 from fastapi.testclient import TestClient
 from jsonschema import validate, ValidationError
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 sys.path.append("..") 
 from src.services.api_fastapi.main import app
 from src.models.response_models import OpenMeteoResponseModel, WeatherAPIResponseModel
