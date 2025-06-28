@@ -3,11 +3,11 @@ from pydantic import BaseModel
 
 
 class OpenWeatherGeocodingModel(BaseModel):
-    name : str
+    name : Optional[str] = ""
     lat: float
     lon: float
-    country : str
-    state : str
+    country : Optional[str] = ""
+    state : Optional[str] = ""
 
 
 class OpenWeatherAPIResponseModel(BaseModel):

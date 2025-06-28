@@ -3,7 +3,11 @@ import numpy as np, datetime
 from openmeteo_sdk.Variable import Variable
 from openmeteo_sdk.Aggregation import Aggregation
 from src.controllers.openweather import get_coord_from_city
-from src.models.response_models import SingleSourceModelRep, Localisation, InformationsTemporelles, Temperature, ConditionsMeteorologiques, Vent
+from src.models.response_models import (
+    SingleSourceModelRep, 
+    Localisation, InformationsTemporelles, 
+    Temperature, ConditionsMeteorologiques, Vent
+)
 
 # dotenv.load_dotenv()
 # TOKEN = os.getenv("api_key_open_weather", "")
@@ -37,11 +41,6 @@ def get_weather_from_openmeteo(c) -> dict:
                 return SingleSourceModelRep(source="openmeteo")
         else:
                 response = res[0]
-                print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
-                print(f"Elevation {response.Elevation()} m asl")
-                print(f"Timezone {response.Timezone()} {response.TimezoneAbbreviation()}")
-                print(f"Timezone difference to GMT+0 {response.UtcOffsetSeconds()} s")
-
                 current = response.Current()
                 current_variables = list(map(lambda i: current.Variables(i), range(0, current.VariablesLength())))
                 current_apparent_temperature = next(filter(lambda x: x.Variable() == Variable.apparent_temperature, current_variables))
