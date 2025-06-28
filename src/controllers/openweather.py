@@ -1,4 +1,5 @@
 import httpx, os, dotenv
+from fastapi import HTTPException
 from src.models.input_models import (
     OpenWeatherGeocodingModel, 
     OpenWeatherAPIResponseModel
@@ -13,13 +14,17 @@ def get_coord_from_city(city_name: str="", country_code: str="", state_code: str
     """
 
     location = f"{city_name}"
+
+    if not location:
+        return HTTPException(status_code=400, detail={'error': 'city name required'})
+    
     if state_code: location += f",{state_code}"
     if country_code: location += f",{country_code}"
     URL = f"http://api.openweathermap.org/geo/1.0/direct?q={location}&limit={limit}&appid={TOKEN}"
-    
     res = httpx.get(URL, ) # timeout=30)
-    if res.status_code == 200:
-        print("ok openweather")
+    
+    if res.status_code == 200 and len(res.json())>0:
+        # print(res.json())
         d = res.json()[0]
         return OpenWeatherGeocodingModel(
             name=d.get('name'),
@@ -29,7 +34,7 @@ def get_coord_from_city(city_name: str="", country_code: str="", state_code: str
             state=d.get('state')
         )
     else:
-        return None
+        return HTTPException(detail={'error': 'city not found'}, status_code=404)
 
 def get_weather_from_city(c):
 
