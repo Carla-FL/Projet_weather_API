@@ -1,5 +1,21 @@
 # README
 
+## 0. Description
+
+Le code source de l'API (FastApi python) se trouve dans le script : `src/services/api_fastapi/main.py`
+Cette API expose les informations météorologiques actuelles à partir du nom de la ville reseignée. 
+Les sources de données utilisées sont :
+- openweather : `https://openweathermap.org`
+    - géogoding pour les coordonnées (latitude, longitude)
+    - informations météorologiques (pas fonctionnel)
+- weather-api : `https://www.weatherapi.com`
+- openmeteo : `https://open-meteo.com`
+
+La route principale à interroger pour avoir les information météorologique aggrégées est : `/meteo/current/?city_name={city_name}`
+Exemple : `/meteo/current/?city_name=Paris`
+Routes swagger: 
+![docs_api](src/tests/load/fastapi_swagger.png)
+
 ## 🇫🇷 Lancer le projet
 
 ### 1. Lancer les services nécessaires avec Docker Compose
@@ -47,6 +63,8 @@ La commande suivante lance les tests unitaires sur les fonctions et des tests de
 ```bash
 pytest
 ```
+Exemple resultats tests:
+![resultats_test](src/tests/load/pytest_logs.png)
 
 #### Avec Locust (tests de charge)
 
